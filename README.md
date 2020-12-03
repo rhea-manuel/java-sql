@@ -51,7 +51,9 @@ WHERE city = 'London'`
   </details>
 
 ```SQL
-
+SELECT *
+FROM customers
+WHERE postal_code = '1010';
 ```
 
 * [ ] ***find the phone number for the supplier with the id 11. Should be (010) 9984510***
@@ -62,7 +64,9 @@ WHERE city = 'London'`
   </details>
 
 ```SQL
-
+SELECT phone
+FROM suppliers
+WHERE supplier_id = 11
 ```
 
 * [ ] ***list orders descending by the order date. The order with date 1998-05-06 should be at the top***
@@ -73,7 +77,9 @@ WHERE city = 'London'`
   </details>
 
 ```SQL
-
+SELECT *
+FROM orders
+ORDER BY (order_date) DESC
 ```
 
 * [ ] ***find all suppliers who have names longer than 20 characters. Returns 11 records***
@@ -85,7 +91,9 @@ WHERE city = 'London'`
   </details>
 
 ```SQL
-
+SELECT *
+FROM suppliers
+WHERE length(company_name) > 20
 ```
 
 * [ ] ***find all customers that include the word 'MARKET' in the contact title. Should return 19 records***
@@ -98,7 +106,9 @@ WHERE city = 'London'`
   </details>
 
 ```SQL
-
+SELECT *
+FROM customers
+WHERE upper(contact_title) LIKE '%MARKET%'
 ```
 
 * [ ] ***add a customer record for***
@@ -115,7 +125,8 @@ WHERE city = 'London'`
   </details>
 
 ```SQL
-
+INSERT INTO customers
+VALUES ('SHIRE', 'The Shire', 'Bilbo Baggins',  '', '1 Hobbit-Hole', 'Bag End', 'Middle Earth', '111');
 ```
 
 * [ ] ***update _Bilbo Baggins_ record so that the postal code changes to _"11122"_***
@@ -126,7 +137,9 @@ WHERE city = 'London'`
   </details>
 
 ```SQL
-
+UPDATE customers
+SET postal_code = '11122'
+WHERE customer_id = 'SHIRE';
 ```
 
 * [ ] ***list orders grouped and ordered by customer company name showing the number of orders per customer company name. _Rattlesnake Canyon Grocery_ should have 18 orders***
@@ -138,6 +151,10 @@ WHERE city = 'London'`
   </details>
 
 ```SQL
+SELECT customers.company_name, count(*)
+FROM orders
+INNER JOIN customers ON orders.customer_id = customers.customer_id
+GROUP BY customers.company_name
 
 ```
 
@@ -149,7 +166,11 @@ WHERE city = 'London'`
   </details>
 
 ```SQL
-
+SELECT customers.contact_name, count(*)
+FROM orders
+INNER JOIN customers ON orders.customer_id = customers.customer_id
+GROUP BY customers.contact_name
+ORDER BY count DESC
 ```
 
 * [ ] ***list orders grouped by customer's city showing the number of orders per city. Returns 69 Records with _Aachen_ showing 6 orders and _Albuquerque_ showing 18 orders***
@@ -160,7 +181,11 @@ WHERE city = 'London'`
   </details>
 
 ```SQL
-
+SELECT customers.city, count(*)
+FROM orders
+INNER JOIN customers ON orders.customer_id = customers.customer_id
+GROUP BY customers.city
+ORDER BY customers.city
 ```
 
 ## Data Normalization
@@ -180,13 +205,13 @@ Below are some empty tables to be used to normalize the database
 * Not all of the cells will contain data in the final solution
 * Feel free to edit these tables as necessary
 
-Table Name:
+Table Name: Person Table
 
-|            |            |            |            |            |            |            |            |            |
+| Person Id  |    Name    |City Dweller|            |            |            |            |            |            |
 |------------|------------|------------|------------|------------|------------|------------|------------|------------|
-|            |            |            |            |            |            |            |            |            |
-|            |            |            |            |            |            |            |            |            |
-|            |            |            |            |            |            |            |            |            |
+|      1     |    Jane    |     Yes    |            |            |            |            |            |            |
+|      2     |    Bob     |     No     |            |            |            |            |            |            |
+|      3     |    Sam     |            |            |            |            |            |            |            |
 |            |            |            |            |            |            |            |            |            |
 |            |            |            |            |            |            |            |            |            |
 |            |            |            |            |            |            |            |            |            |
